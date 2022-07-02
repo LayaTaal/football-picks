@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\AdminRoundController;
+use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -54,3 +57,18 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+//Route::resource( 'admin/seasons/', AdminSeasonController::class )->except( 'show', 'update', 'destroy' );
+Route::get( 'admin/seasons', [ AdminSeasonController::class, 'index' ] );
+Route::get( 'admin/seasons/create', [ AdminSeasonController::class, 'create' ] );
+Route::post( 'admin/seasons/', [ AdminSeasonController::class, 'store' ] );
+Route::get( 'admin/seasons/{season}/edit', [ AdminSeasonController::class, 'edit'] );
+Route::patch( 'admin/seasons/{season}', [ AdminSeasonController::class, 'update'] );
+Route::delete( 'admin/seasons/{season}', [ AdminSeasonController::class, 'destroy'] );
+
+Route::get( 'admin/rounds/create', [ AdminRoundController::class, 'create' ] );
+Route::post( 'admin/rounds', [ AdminRoundController::class, 'store' ] );
+
+Route::middleware( 'admin' )->group( function() {
+//    Route::get( 'admin/weeks/create', [ AdminRoundController::class, 'create' ] );
+} );
