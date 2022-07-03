@@ -14,6 +14,12 @@ class AdminSeasonController extends Controller
         ] );
     }
 
+    public function show( Season $season ) {
+        return view( 'admin.seasons.show', [
+            'season' => $season
+        ] );
+    }
+
     public function create() {
         return view( 'admin.seasons.create' );
     }

@@ -58,13 +58,7 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
 });
 
-//Route::resource( 'admin/seasons/', AdminSeasonController::class )->except( 'show', 'update', 'destroy' );
-Route::get( 'admin/seasons', [ AdminSeasonController::class, 'index' ] );
-Route::get( 'admin/seasons/create', [ AdminSeasonController::class, 'create' ] );
-Route::post( 'admin/seasons/', [ AdminSeasonController::class, 'store' ] );
-Route::get( 'admin/seasons/{season}/edit', [ AdminSeasonController::class, 'edit'] );
-Route::patch( 'admin/seasons/{season}', [ AdminSeasonController::class, 'update'] );
-Route::delete( 'admin/seasons/{season}', [ AdminSeasonController::class, 'destroy'] );
+Route::resource( 'admin/seasons', AdminSeasonController::class );
 
 Route::get( 'admin/rounds/create', [ AdminRoundController::class, 'create' ] );
 Route::post( 'admin/rounds', [ AdminRoundController::class, 'store' ] );

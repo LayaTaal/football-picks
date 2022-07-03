@@ -2,16 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Round;
+use App\Models\Season;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AdminRoundController extends Controller {
 
+    public function show( Round $round ) {
+        return view( 'admin.rounds.show', [
+            'round' => $round,
+        ] );
+    }
+
     public function create() {
-        return view( 'admin.rounds.create' );
+        return view( 'admin.rounds.create', [ 'seasons' => Season::all() ] );
     }
 
     public function store() {
-        dd( request()->all() );
+        $attributes = request()->validate( [
+            'title'      => [ 'required', Rule::unique( 'rounds', 'title' ) ],
+            'seasons_id' => [ 'required', Rule::exists( 'seasons', 'id' ) ],
+            'start_date' => 'required',
+            'end_date'   => 'required',
+        ] );
+
+        $attributes['slug'] = Str::slug( $attributes['title']);
+
+        Round::create( $attributes );
+
+        // todo: route to season round was saved in
+        return redirect( '/admin/seasons/' )->with( 'success', 'Round created successfully.' );
+    }
+
+    public function edit( Round $round ) {
+        return view( 'admin.rounds.edit', [ 'round' => $round ] );
+    }
+
+    public function update( Round $round ) {
+        $attributes = request()->validate( [
+            'title' => [ 'required', Rule::unique( 'rounds', 'title' )->ignore( $round ) ],
+        ] );
+
+        $round->update( $attributes );
+
+        return redirect( '/admin/rounds/' )->with( 'success', 'Round updated successfully.' );
+    }
+
+    public function destroy( Round $round ) {
+        $round->delete();
+
+        return back()->with( 'success', 'Round deleted successfully.' );
     }
 
 }

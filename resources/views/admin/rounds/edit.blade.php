@@ -20,7 +20,7 @@
                                 name="title"
                                 id="title"
                                 required
-                                value="{{ old( 'title' ) }}"
+                                value="{{ old( 'title', $round->title ) }}"
                             />
 
                             @error( 'title' )
@@ -36,7 +36,7 @@
                                 name="start_date"
                                 id="start_date"
                                 required
-                                value="{{ old( 'start_date' ) }}"
+                                value="{{ old( 'start_date', $round->start_date ) }}"
                             />
 
                             @error( 'start_date' )
@@ -53,7 +53,7 @@
                                 name="end_date"
                                 id="end_date"
                                 required
-                                value="{{ old( 'end_date' ) }}"
+                                value="{{ old( 'end_date', $round->end_date ) }}"
                             />
 
                             @error( 'end_date' )
@@ -62,27 +62,27 @@
                         </div>
 
                         <div class="mb-6">
-                            <x-label for="seasons_id">Season</x-label>
+                            <x-label for="season">Season</x-label>
 
                             <select
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                name="seasons_id"
-                                id="seasons_id"
+                                name="season"
+                                id="season"
                                 required>
                                 <option value="">Select a Season</option>
 
-                                @foreach( $seasons as $season )
-                                    <option value="{{ $season->id }}" {{ old( 'seasons_id' ) === $season->id ? 'selected' : '' }}>{{ $season->title }}</option>
+                                @foreach( $seasons as $current_season )
+                                    <option value="{{ $season->id }}" {{ $current_season === $season->id ? 'selected' : '' }}>{{ $season->title }}</option>
                                 @endforeach
                             </select>
 
-                            @error( 'seasons_id' )
+                            @error( 'season' )
                             <p>{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div class="mb-6">
-                            <x-button type="submit">Create Round</x-button>
+                            <x-button type="submit">Update Round</x-button>
                         </div>
                     </form>
                 </div>

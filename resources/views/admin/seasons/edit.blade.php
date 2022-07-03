@@ -7,6 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-quicklinks />
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 <div class="w-full md:w-1/3">
                     <form method="POST" action="/admin/seasons/{{ $season->id }}" enctype="multipart/form-data">
