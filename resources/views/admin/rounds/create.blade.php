@@ -62,21 +62,21 @@
                         </div>
 
                         <div class="mb-6">
-                            <x-label for="seasons_id">Season</x-label>
+                            <x-label for="season_id">Season</x-label>
 
                             <select
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                name="seasons_id"
-                                id="seasons_id"
+                                name="season_id"
+                                id="season_id"
                                 required>
                                 <option value="">Select a Season</option>
 
                                 @foreach( $seasons as $season )
-                                    <option value="{{ $season->id }}" {{ old( 'seasons_id' ) === $season->id ? 'selected' : '' }}>{{ $season->title }}</option>
+                                    <option value="{{ $season->id }}" {{ old( 'season_id' ) === $season->id ? 'selected' : '' }}>{{ $season->title }}</option>
                                 @endforeach
                             </select>
 
-                            @error( 'seasons_id' )
+                            @error( 'season_id' )
                             <p>{{ $message }}</p>
                             @enderror
                         </div>

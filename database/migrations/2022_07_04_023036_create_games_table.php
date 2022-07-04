@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('picks', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->foreignId( 'user_id' ); // User
-            // Game
-            // Winner Pick
+            $table->foreignId( 'away_team' )->constrained( 'teams' );
+            $table->foreignId( 'home_team' )->constrained( 'teams' );
+            $table->dateTimeTz( 'date' );
+            $table->integer( 'home_team_score' );
+            $table->integer( 'away_team_score' );
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('picks');
+        Schema::dropIfExists('games');
     }
 };

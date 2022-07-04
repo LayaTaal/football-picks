@@ -22,7 +22,7 @@ class AdminRoundController extends Controller {
     public function store() {
         $attributes = request()->validate( [
             'title'      => [ 'required', Rule::unique( 'rounds', 'title' ) ],
-            'seasons_id' => [ 'required', Rule::exists( 'seasons', 'id' ) ],
+            'season_id'  => [ 'required', Rule::exists( 'seasons', 'id' ) ],
             'start_date' => 'required',
             'end_date'   => 'required',
         ] );
@@ -31,22 +31,22 @@ class AdminRoundController extends Controller {
 
         Round::create( $attributes );
 
-        // todo: route to season round was saved in
-        return redirect( '/admin/seasons/' )->with( 'success', 'Round created successfully.' );
+        return redirect( '/admin/seasons/' . $attributes[ 'season_id' ] )->with( 'success', 'Round created successfully.' );
     }
 
     public function edit( Round $round ) {
-        return view( 'admin.rounds.edit', [ 'round' => $round ] );
+        return view( 'admin.rounds.edit', [ 'round' => $round, 'seasons' => Season::all() ] );
     }
 
     public function update( Round $round ) {
         $attributes = request()->validate( [
-            'title' => [ 'required', Rule::unique( 'rounds', 'title' )->ignore( $round ) ],
+            'title'     => [ 'required', Rule::unique( 'rounds', 'title' )->ignore( $round ) ],
+            'season_id' => [ 'required', Rule::exists( 'seasons', 'id' ) ],
         ] );
 
         $round->update( $attributes );
 
-        return redirect( '/admin/rounds/' )->with( 'success', 'Round updated successfully.' );
+        return redirect( '/admin/seasons/' . $attributes[ 'season_id' ] )->with( 'success', 'Round updated successfully.' );
     }
 
     public function destroy( Round $round ) {

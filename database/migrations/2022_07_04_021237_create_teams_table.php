@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rounds', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Round Name
-            $table->string('slug')->unique();// Slug
-            $table->date( 'start_date' ); // Start Date
-            $table->date( 'end_date' ); // End Date
-            $table->foreignId( 'season_id' ); // Season to associate with
+            $table->string( 'name' );
+            $table->string( 'slug' )->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rounds');
+        Schema::dropIfExists('teams');
     }
 };

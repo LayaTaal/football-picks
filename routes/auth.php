@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\AdminRoundController;
 use App\Http\Controllers\AdminSeasonController;
@@ -59,9 +60,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource( 'admin/seasons', AdminSeasonController::class );
-
-Route::get( 'admin/rounds/create', [ AdminRoundController::class, 'create' ] );
-Route::post( 'admin/rounds', [ AdminRoundController::class, 'store' ] );
+Route::resource( 'admin/rounds', AdminRoundController::class )->except( 'index' );
+Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
 
 Route::middleware( 'admin' )->group( function() {
 //    Route::get( 'admin/weeks/create', [ AdminRoundController::class, 'create' ] );

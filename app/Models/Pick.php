@@ -5,13 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Season extends Model
+class Pick extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function rounds() {
-        return $this->hasMany( Round::class );
-    }
 }

@@ -9,8 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 <div class="w-full md:w-1/3">
-                    <form method="POST" action="/admin/rounds" enctype="multipart/form-data">
+                    <form method="POST" action="/admin/rounds/{{ $round->id }}" enctype="multipart/form-data">
                         @csrf
+                        @method( 'PATCH' )
 
                         <div class="mb-6">
                             <x-label for="title">Round Name</x-label>
@@ -62,21 +63,21 @@
                         </div>
 
                         <div class="mb-6">
-                            <x-label for="season">Season</x-label>
+                            <x-label for="season_id">Season</x-label>
 
                             <select
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                name="season"
-                                id="season"
+                                name="season_id"
+                                id="season_id"
                                 required>
                                 <option value="">Select a Season</option>
 
-                                @foreach( $seasons as $current_season )
-                                    <option value="{{ $season->id }}" {{ $current_season === $season->id ? 'selected' : '' }}>{{ $season->title }}</option>
+                                @foreach( $seasons as $season )
+                                    <option value="{{ $season->id }}" {{ $season->id === $round->season_id ? 'selected' : '' }}>{{ $season->title }}</option>
                                 @endforeach
                             </select>
 
-                            @error( 'season' )
+                            @error( 'season_id' )
                             <p>{{ $message }}</p>
                             @enderror
                         </div>
