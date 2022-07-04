@@ -60,14 +60,12 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
 });
 
-Route::resource( 'admin/seasons', AdminSeasonController::class );
-Route::resource( 'admin/rounds', AdminRoundController::class )->except( 'index' );
-Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
+Route::middleware( 'can:admin' )->group( function() {
+    Route::resource( 'admin/seasons', AdminSeasonController::class );
+    Route::resource( 'admin/rounds', AdminRoundController::class )->except( 'index' );
+    Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
 
-Route::get( 'admin/games', [ AdminGameController::class, 'index' ] );
-Route::get( 'admin/games/create', [ AdminGameController::class, 'create' ] );
-Route::post( 'admin/games', [ AdminGameController::class, 'store' ] );
-
-Route::middleware( 'admin' )->group( function() {
-//    Route::get( 'admin/weeks/create', [ AdminRoundController::class, 'create' ] );
+    Route::get( 'admin/games', [ AdminGameController::class, 'index' ] );
+    Route::get( 'admin/games/create', [ AdminGameController::class, 'create' ] );
+    Route::post( 'admin/games', [ AdminGameController::class, 'store' ] );
 } );
