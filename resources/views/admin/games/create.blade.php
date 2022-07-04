@@ -56,7 +56,7 @@
                             <x-label for="date" class="block">Game Date:</x-label>
 
                             <x-input
-                                type="datetime"
+                                type="datetime-local"
                                 name="date"
                                 id="date"
                                 value="{{ old( 'date' ) }}"
