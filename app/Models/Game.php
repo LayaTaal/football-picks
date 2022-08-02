@@ -10,4 +10,8 @@ class Game extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function round() {
+        return $this->belongsTo( Round::class );
+    }
 }

@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware( 'can:admin' )->group( function() {
     Route::resource( 'admin/seasons', AdminSeasonController::class );
-    Route::resource( 'admin/rounds', AdminRoundController::class )->except( 'index' );
+    Route::resource( 'admin/rounds', AdminRoundController::class );
     Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
 
     Route::get( 'admin/games', [ AdminGameController::class, 'index' ] );

@@ -7,13 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-quicklinks>
-                <a
-                    href="/admin/seasons/create"
-                    class="text-white bg-blue-500 uppercase font-semibold px-5 py-2 rounded-2xl hover:bg-blue-600 text-xs">
-                    Create New Season
-                </a>
-            </x-quicklinks>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 <table class="min-w-full divide-y divide-gray-200">
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -46,6 +39,11 @@
                     </tbody>
                 </table>
             </div>
+            <x-quicklinks class="mt-6">
+                <x-button-link href="/admin/seasons/create">
+                    Create New Season
+                </x-button-link>
+            </x-quicklinks>
         </div>
     </div>
 </x-app-layout>

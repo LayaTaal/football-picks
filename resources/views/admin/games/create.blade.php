@@ -4,7 +4,6 @@
             {{ __('Add New Game') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
@@ -33,7 +32,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <x-label for="away_team">Home Team</x-label>
+                            <x-label for="home_team">Home Team</x-label>
 
                             <select
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -48,6 +47,25 @@
                             </select>
 
                             @error( 'home_team' )
+                            <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-6">
+                            <x-label for="round_id">Round</x-label>
+
+                            <select
+                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                name="round_id"
+                                id="round_id">
+                                <option value="">Select Round</option>
+
+                                @foreach( $rounds as $round )
+                                    <option value="{{ $round->id }}" {{ old( 'round_id' ) === $team->id || $round->id == request()->get( 'round' ) ? 'selected' : '' }}>{{ $round->title }}</option>
+                                @endforeach
+                            </select>
+
+                            @error( 'round_id' )
                             <p>{{ $message }}</p>
                             @enderror
                         </div>

@@ -79,6 +79,11 @@
                     </tbody>
                 </table>
             </div>
+            <x-quicklinks class="mt-6">
+                <x-button-link href="/admin/rounds/create">
+                    Add Round
+                </x-button-link>
+            </x-quicklinks>
         </div>
     </div>
 </x-app-layout>

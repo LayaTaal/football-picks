@@ -7,7 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-quicklinks />
+            <x-quicklinks>
+                <a href="{{ url()->previous() }}">{{ __( 'Back to Previous' ) }}</a>
+            </x-quicklinks>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-white divide-y divide-gray-200">
@@ -84,6 +86,11 @@
                     </tbody>
                 </table>
             </div>
+            <x-quicklinks class="mt-6">
+                <x-button-link href="/admin/games/create?round={{ $round->id }}">
+                    Add Game
+                </x-button-link>
+            </x-quicklinks>
         </div>
     </div>
 </x-app-layout>

@@ -9,9 +9,18 @@ use Illuminate\Validation\Rule;
 
 class AdminRoundController extends Controller {
 
+    public function index() {
+        return view( 'admin.rounds.index', [
+            'rounds' => Round::all(),
+        ] );
+    }
+
     public function show( Round $round ) {
+        dd( $round->games );
+
         return view( 'admin.rounds.show', [
             'round' => $round,
+            'games' => $round->games,
         ] );
     }
 
