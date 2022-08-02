@@ -16,8 +16,6 @@ class AdminRoundController extends Controller {
     }
 
     public function show( Round $round ) {
-        dd( $round->games );
-
         return view( 'admin.rounds.show', [
             'round' => $round,
             'games' => $round->games,

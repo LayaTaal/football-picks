@@ -17,26 +17,26 @@
                         <th class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="text-sm font-semibold text-gray-900">
-                                    Away Team
+                                    Game
                                 </div>
                             </div>
                         </th>
                         <th class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-right">
-                                <div class="text-sm font-semibold text-gray-900">
-                                    Home Team
-                                </div>
-                            </div>
-                        </th>
-                        <th class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-right">
+                            <div class="text-left">
                                 <div class="text-sm font-semibold text-gray-900">
                                     Date
                                 </div>
                             </div>
                         </th>
                         <th class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-right">
+                            <div class="text-left">
+                                <div class="text-sm font-semibold text-gray-900">
+                                    Time
+                                </div>
+                            </div>
+                        </th>
+                        <th class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-left">
                                 <div class="text-sm font-semibold text-gray-900">
                                     Score
                                 </div>
@@ -52,37 +52,41 @@
                     </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">
-                                    Team 1
-                                </div>
-                            </td>
+                        @foreach( $round->games as $game )
+                            <?php $away_team = \App\Models\Team::find( $game->away_team ); ?>
+                            <?php $home_team = \App\Models\Team::find( $game->home_team ); ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ $away_team->name }} at {{ $home_team->name }}
+                                    </div>
+                                </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="text-sm font-medium text-gray-900">
-                                    Team 2
-                                </div>
-                            </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ \Carbon\Carbon::parse( $game->date )->format( 'D F j, Y' ) }}
+                                    </div>
+                                </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="text-sm font-medium text-gray-900">
-                                    7-14-2022
-                                </div>
-                            </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ \Carbon\Carbon::parse( $game->date )->format( 'g:i a' ) }}
+                                    </div>
+                                </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="text-sm font-medium text-gray-900">
-                                    31 - 10
-                                </div>
-                            </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ $game->away_team_score }} - {{ $game->home_team_score }}
+                                    </div>
+                                </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="text-sm font-medium text-gray-900">
-                                    <a href="#">Edit</a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        <a href="/admin/games/{{ $game->id }}/edit">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
