@@ -51,13 +51,8 @@ class AdminGameController extends Controller {
             'date'      => [ 'required' ],
         ] );
 
-        if ( $home_team_score = request()->get( 'home_team_score') ) {
-            $attributes[ 'home_team_score' ] = $home_team_score;
-        }
-
-        if ( $away_team_score = request()->get( 'away_team_score') ) {
-            $attributes[ 'away_team_score' ] = $away_team_score;
-        }
+        $attributes[ 'home_team_score' ] = request()->get( 'home_team_score') ?? null;
+        $attributes[ 'away_team_score' ] = request()->get( 'away_team_score') ?? null;
 
         $game->update( $attributes );
 
