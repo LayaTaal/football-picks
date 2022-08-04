@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\AdminRoundController;
 use App\Http\Controllers\AdminSeasonController;
+use App\Http\Controllers\AdminSettingController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -65,4 +66,5 @@ Route::middleware( 'can:admin' )->group( function() {
     Route::resource( 'admin/rounds', AdminRoundController::class );
     Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
     Route::resource( 'admin/games', AdminGameController::class )->except( 'show' );
+    Route::get( 'admin/settings/', [ AdminSettingController::class, 'index' ] );
 } );
