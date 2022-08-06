@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function allPicks() {
+        return $this->hasMany( Pick::class );
+    }
+
+    public function picksInCurrentRound() {
+        return $this->hasMany( Pick::class )->where( 'round_id', config( 'settings' )[ 'active_round' ] );
+    }
 }

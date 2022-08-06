@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('picks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId( 'user_id' );
+            $table->foreignId( 'game_id' );
             $table->foreignId( 'team_id' );
+            $table->foreignId( 'round_id' );
+            $table->foreignId( 'season_id' );
             $table->timestamps();
         });
     }

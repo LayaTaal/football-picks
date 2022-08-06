@@ -67,4 +67,5 @@ Route::middleware( 'can:admin' )->group( function() {
     Route::resource( 'admin/teams', AdminTeamController::class )->except( 'show' );
     Route::resource( 'admin/games', AdminGameController::class )->except( 'show' );
     Route::get( 'admin/settings/', [ AdminSettingController::class, 'index' ] );
+    Route::patch( 'admin/settings/', [ AdminSettingController::class, 'update' ] );
 } );

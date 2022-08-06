@@ -39,14 +39,11 @@
                         </div>
                         <div class="w-1/3 pr-4">
                             <h3 class="pb-2 border-b border-gray-200 mb-4 font-semibold text-l">
-                                {{ __('Team Settings') }}
+                                {{ __('Global Settings') }}
                             </h3>
                             <ul>
                                 <li class="pb-1">
-                                    <a href="admin/teams" class="text-blue-500 hover:text-blue-600 text-sm">Manage Teams</a>
-                                </li>
-                                <li class="pb-1">
-                                    <a href="admin/teams/create" class="text-blue-500 hover:text-blue-600 text-sm">Create a New Team</a>
+                                    <a href="admin/settings" class="text-blue-500 hover:text-blue-600 text-sm">Manage Settings</a>
                                 </li>
                             </ul>
                         </div>
