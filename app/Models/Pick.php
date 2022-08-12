@@ -14,8 +14,12 @@ class Pick extends Model
     public function user() {
         return $this->belongsTo( User::class );
     }
+//
+//    public function pickByGame( Game $game ) {
+//        return $this->where( 'user_id', 1 )->where( 'round_id', 1 )->get();
+//    }
 
-    public function pickByGame( Game $game ) {
-        return $this->where( 'user_id', 1 )->where( 'round_id', 1 )->get();
+    public function is_correct() {
+        // return true if the winning team was picked
     }
 }

@@ -5,27 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Pick;
 use App\Models\Team;
+use App\Models\Round;
+use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller {
 
     public function index( Request $request ) {
+        $settings = config( 'settings' );
 
         return view( '/dashboard', [
-            'current_games' => Game::where( 'round_id', config( 'settings' )['active_round'] )->get(),
+            'current_games' => Game::where( 'round_id', $settings['active_round'] )->get(),
+            'active_round'  => Round::findOrFail( $settings['active_round'] ),
+            'active_season' => Season::findOrFail( $settings['active_season'] ),
         ] );
     }
 
     public function update() {
         $games_data = request()->all();
-        $games = $games_data['games'] ?? [];
+        $games      = $games_data['games'] ?? [];
 
         if ( ! $games ) {
             return back()->with( 'error', 'There are no games this week!' );
         }
 
         foreach ( $games as $game_id ) {
+
+            if ( Game::findOrFail( $game_id )->is_over() ) {
+                continue;
+            }
+
             $attributes = [
                 'user_id'   => request()->user()->id,
                 'game_id'   => (int) $game_id,
