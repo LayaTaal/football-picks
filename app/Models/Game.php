@@ -19,7 +19,13 @@ class Game extends Model {
     }
 
     public function user_pick() {
-        return $this->hasOne( Pick::class )->where( 'user_id', Auth::id() ) ?? null;
+        $pick = $this->hasone( Pick::class )->where( 'user_id', Auth::id() );
+
+        if ( ! $pick ) {
+            return [];
+        }
+
+        return $pick;
     }
 
     public function formatted_date() {
@@ -41,11 +47,11 @@ class Game extends Model {
         return $this->home_team_score && $this->away_team_score;
     }
 
-    public function winning_team(): ?Team {
+    public function home_team_won(): ?bool {
         if ( $this->home_team_score > $this->away_team_score ) {
-            return Team::findOrFail( $this->home_team );
+            return true;
         } else if ( $this->home_team_score < $this->away_team_score ){
-            return Team::findOrFail( $this->away_team );
+            return false;
         }
 
         // Case: tie

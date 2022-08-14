@@ -9,13 +9,17 @@ use Illuminate\Http\Request;
 
 class AdminSettingController extends Controller {
 
+    /**
+     * todo: Need to add error handling when no active season or round
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index() {
         $settings = config( 'settings' );
 
         return view( 'admin/settings/index', [
             'settings'      => $settings,
-            'active_season' => Season::find( $settings['active_season'] ),
-            'active_round'  => Round::find( $settings['active_round'] ),
+            'active_season' => Season::findOrFail( $settings['active_season'] ),
+            'active_round'  => Round::findOrFail( $settings['active_round'] ),
             'seasons'       => Season::all(),
             'rounds'        => Round::where( 'season_id', $settings['active_season'] )->get(),
         ] );

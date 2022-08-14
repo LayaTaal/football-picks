@@ -17,7 +17,8 @@ class Team extends Model {
         // todo: there is a potential problem here and games should store the season they are from as well
         $game = Game::where( 'away_team', $this->id )
                    ->orWhere( 'home_team', $this->id )
-                   ->where( 'round_id', $settings['active_round'] )->get();
+                   ->where( 'round_id', $settings['active_round'] )
+                   ->where( 'season_id', $settings['active_round'] )->get();
 
         return $game[0];
     }

@@ -61,11 +61,40 @@
                                 <option value="">Select Round</option>
 
                                 @foreach( $rounds as $round )
-                                    <option value="{{ $round->id }}" {{ old( 'round_id' ) === $team->id || $round->id == request()->get( 'round' ) ? 'selected' : '' }}>{{ $round->title }}</option>
+                                    <option
+                                        value="{{ $round->id }}"
+                                        {{ old( 'round_id' ) === $team->id || $round->id == request()->get( 'round' ) ? 'selected' : '' }}
+                                    >
+                                        {{ $round->title }}
+                                    </option>
                                 @endforeach
                             </select>
 
                             @error( 'round_id' )
+                            <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-6">
+                            <x-label for="season_id">Season</x-label>
+
+                            <select
+                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                name="season_id"
+                                id="season_id">
+                                <option value="">Select Season</option>
+
+                                @foreach( $seasons as $season )
+                                    <option
+                                        value="{{ $season->id }}"
+                                        {{ old( 'season_id' ) === $team->id || $season->id == request()->get( 'season' ) ? 'selected' : '' }}
+                                    >
+                                        {{ $season->title }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error( 'season_id' )
                             <p>{{ $message }}</p>
                             @enderror
                         </div>

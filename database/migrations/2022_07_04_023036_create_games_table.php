@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId( 'away_team' )->constrained( 'teams' );
             $table->foreignId( 'home_team' )->constrained( 'teams' );
             $table->foreignId( 'round_id' );
+            $table->foreignId( 'season_id' );
             $table->dateTimeTz( 'date' );
             $table->integer( 'home_team_score' )->nullable();
             $table->integer( 'away_team_score')->nullable();

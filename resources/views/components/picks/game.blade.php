@@ -6,7 +6,9 @@
             name="game_{{ $game->id }}[]"
             value="{{ $team->id }}"
             class="{{ $game->is_over() ? 'hidden' : '' }}"
-            {{ $game->user_pick->team_id === $team->id ? 'checked' : '' }}
+            @if ( $game->user_pick )
+                {{ $game->user_pick->team_id === $team->id ? 'checked' : '' }}
+            @endif
         >
         {{ $team->name }}
     </label>
