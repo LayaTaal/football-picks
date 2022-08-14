@@ -2,18 +2,17 @@
 
 namespace App\View\Components;
 
+use App\Models\User;
 use Illuminate\View\Component;
 
-class PlayerList extends Component
-{
+class UserStatsTable extends Component {
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    public function __construct() {
     }
 
     /**
@@ -21,8 +20,11 @@ class PlayerList extends Component
      *
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
-    public function render()
-    {
-        return view('components.player-list');
+    public function render() {
+        return view( 'components.user-stats-table',
+            [
+                'users' => User::all(),
+            ] );
     }
+
 }

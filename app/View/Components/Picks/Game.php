@@ -16,7 +16,6 @@ class Game extends Component {
         public $game,
         public Team $team,
     ) {
-//        dd( $game->user_pick->game_id );
     }
 
     public function render(): View {

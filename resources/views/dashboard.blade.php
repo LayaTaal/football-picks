@@ -132,6 +132,6 @@
     </x-section>
 
     <x-section title="Your League">
-
+        <x-user-stats-table />
     </x-section>
 </x-app-layout>
