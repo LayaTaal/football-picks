@@ -57,4 +57,14 @@ class Game extends Model {
         // Case: tie
         return null;
     }
+
+    public function winning_team() {
+        if ( $this->home_team_score > $this->away_team_score ) {
+            return $this->home_team;
+        } else if ( $this->home_team_score < $this->away_team_score ){
+            return $this->away_team;
+        }
+
+        return null;
+    }
 }

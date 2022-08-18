@@ -11,11 +11,27 @@ class Pick extends Model
 
     protected $guarded = [];
 
+    public function season() {
+        return Season::findOrFail( $this->season_id );
+    }
+
+    public function round() {
+        return Round::findOrFail( $this->round_id );
+    }
+
     public function user() {
         return $this->belongsTo( User::class );
     }
 
+    public function game() {
+        return Game::findOrFail( $this->game_id );
+    }
+
+    public function team() {
+        return Team::findOrFail( $this->team_id );
+    }
+
     public function is_correct() {
-        // return true if the winning team was picked
+
     }
 }

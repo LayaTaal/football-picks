@@ -33,6 +33,9 @@ class AdminGameController extends Controller {
             'date'      => [ 'required' ],
         ] );
 
+        $attributes['home_team_score'] = request()->get( 'home_team_score' ) ?? null;
+        $attributes['away_team_score'] = request()->get( 'away_team_score' ) ?? null;
+
         Game::create( $attributes );
 
         return redirect( '/admin/games' )->with( 'success', 'Game created successfully.' );

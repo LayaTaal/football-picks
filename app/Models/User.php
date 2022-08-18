@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -42,11 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function allPicks() {
+    public function picks() {
         return $this->hasMany( Pick::class );
     }
 
-    public function picksInCurrentRound() {
-        return $this->hasMany( Pick::class )->where( 'round_id', config( 'settings' )[ 'active_round' ] );
+    public function picks_this_week() {
+        return $this->hasMany( Pick::class )
+            ->where( 'season_id', config( 'settings' )['active_season'] )
+            ->where( 'round_id', config( 'settings' )['active_round'] )
+            ->orderBy( 'team_id' );
     }
+
 }

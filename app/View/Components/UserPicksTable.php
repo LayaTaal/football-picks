@@ -3,9 +3,10 @@
 namespace App\View\Components;
 
 use App\Models\User;
+use App\Models\Pick;
 use Illuminate\View\Component;
 
-class UserStatsTable extends Component {
+class UserPicksTable extends Component {
 
     /**
      * Create a new component instance.
@@ -13,6 +14,7 @@ class UserStatsTable extends Component {
      * @return void
      */
     public function __construct() {
+        //
     }
 
     /**
@@ -21,7 +23,7 @@ class UserStatsTable extends Component {
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
     public function render() {
-        return view( 'components.user-stats-table',
+        return view( 'components.user-picks-table',
             [
                 'users' => User::all(),
             ]

@@ -31,25 +31,30 @@ class DashboardController extends Controller {
         }
 
         foreach ( $games as $game_id ) {
+            $game_key   = 'game_' . $game_id;
 
             if ( Game::findOrFail( $game_id )->is_over() ) {
+                continue;
+            }
+
+            if ( ! array_key_exists( $game_key, $games_data ) ) {
                 continue;
             }
 
             $attributes = [
                 'user_id'   => request()->user()->id,
                 'game_id'   => (int) $game_id,
-                'team_id'   => (int) $games_data[ 'game_' . $game_id ][0] ?? 0,
+                'team_id'   => (int) $games_data[ $game_key ][0] ?? 0,
                 'season_id' => config( 'settings' )['active_season'],
                 'round_id'  => config( 'settings' )['active_round'],
             ];
 
-            $pick = Pick::where( 'game_id', $game_id );
+            $pick = Pick::where( 'game_id', $game_id )->where( 'user_id', request()->user()->id );
 
             if ( $pick->exists() ) {
                 $pick->update( $attributes );
             } else {
-                Pick::create( $attributes );
+                Pick::insert( $attributes );
             }
         }
 

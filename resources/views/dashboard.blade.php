@@ -63,7 +63,7 @@
                         <input type="hidden" id="games[]" name="games[]" value="{{ $game->id }}">
 
                         <tr>
-                            @if( $game->has_score() && $away_team->id === $game->user_pick->team_id )
+                            @if( $game->has_score() && $away_team->id === $game->user_pick?->team_id )
                                 <td class="px-6 py-4 whitespace-nowrap{{ ! $game->home_team_won()  ? ' bg-green-400' : ' bg-red-400' }}">
                                     <div class="flex items-center">
                                         <x-picks.game :game="$game" :team="$away_team" />
@@ -85,7 +85,7 @@
                                 </div>
                             </td>
 
-                            @if( $game->has_score() && $home_team->id === $game->user_pick->team_id )
+                            @if( $game->has_score() && $home_team->id === $game->user_pick?->team_id )
                                 <td class="px-6 py-4 whitespace-nowrap{{ $game->home_team_won() ? ' bg-green-400' : ' bg-red-400' }}">
                                     <div class="flex items-center">
                                         <x-picks.game :game="$game" :team="$home_team" />
@@ -132,6 +132,6 @@
     </x-section>
 
     <x-section title="Your League">
-        <x-user-stats-table />
+        <x-user-picks-table />
     </x-section>
 </x-app-layout>
