@@ -3,10 +3,10 @@
 namespace App\View\Components;
 
 use App\Models\User;
-use App\Models\Pick;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
 
-class UserPicksTable extends Component {
+class LeaguePicks extends Component {
 
     /**
      * Create a new component instance.
@@ -23,9 +23,15 @@ class UserPicksTable extends Component {
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
     public function render() {
-        return view( 'components.user-picks-table',
+        $users = User::all()
+             ->filter( function ( $user ) {
+                 return $user->id !== Auth::user()->id;
+             } )
+             ->prepend( Auth::user() );
+
+        return view( 'components.league-picks',
             [
-                'users' => User::all(),
+                'users' => $users,
             ]
         );
     }
