@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,6 +42,14 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function all_current_first() {
+        return User::all()
+             ->filter( function ( $user ) {
+                 return $user->id !== Auth::user()->id;
+             } )
+             ->prepend( Auth::user() );
+    }
 
     public function picks() {
         return $this->hasMany( Pick::class );

@@ -12,6 +12,14 @@ class Season extends Model
     protected $guarded = [];
 
     public function rounds() {
-        return $this->hasMany( Round::class );
+        return Round::where( 'season_id', $this->id );
+    }
+
+    public function games() {
+        return Game::where( 'season_id', $this->id );
+    }
+
+    public function picks() {
+        return Pick::where( 'season_id', $this->id );
     }
 }

@@ -16,4 +16,8 @@
     <x-section title="Weekly Standings">
         <x-league-picks />
     </x-section>
+
+    <x-section title="Season Standings">
+        <x-season-stats />
+    </x-section>
 </x-app-layout>

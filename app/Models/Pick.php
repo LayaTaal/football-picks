@@ -30,8 +30,4 @@ class Pick extends Model
     public function team() {
         return Team::findOrFail( $this->team_id );
     }
-
-    public function is_correct() {
-
-    }
 }
