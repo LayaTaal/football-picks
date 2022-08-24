@@ -49,9 +49,9 @@ class SeasonStats extends Component {
                     $correct_picks = 0;
 
                     foreach ( $user_picks as $pick ) {
-                        $winning_team = $pick->game()->winning_team();
+                        $winning_team = $pick->game->winning_team();
 
-                        if ( $winning_team === $pick->team()->id ) {
+                        if ( $winning_team === $pick->team->id ) {
                             $correct_picks += 1;
                         }
                     }

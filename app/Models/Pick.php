@@ -12,11 +12,11 @@ class Pick extends Model
     protected $guarded = [];
 
     public function season() {
-        return Season::findOrFail( $this->season_id );
+        return $this->belongsTo( Season::class );
     }
 
     public function round() {
-        return Round::findOrFail( $this->round_id );
+        return $this->belongsTo( Round::class );
     }
 
     public function user() {
@@ -24,10 +24,10 @@ class Pick extends Model
     }
 
     public function game() {
-        return Game::findOrFail( $this->game_id );
+        return $this->belongsTo( Game::class );
     }
 
     public function team() {
-        return Team::findOrFail( $this->team_id );
+        return $this->belongsTo( Team::class );
     }
 }
