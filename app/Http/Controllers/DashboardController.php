@@ -15,8 +15,14 @@ class DashboardController extends Controller {
     public function index( Request $request ) {
         $settings = config( 'settings' );
 
+        $current_games = Game::where( 'round_id', $settings['active_round'] )->get();
+
+        $sorted_games = $current_games->sortBy( 'date' );
+
+        $sorted_games->values()->all();
+
         return view( '/dashboard', [
-            'current_games' => Game::where( 'round_id', $settings['active_round'] )->get(),
+            'current_games' => $sorted_games,
             'active_round'  => Round::findOrFail( $settings['active_round'] ),
             'active_season' => Season::findOrFail( $settings['active_season'] ),
         ] );
@@ -31,7 +37,7 @@ class DashboardController extends Controller {
         }
 
         foreach ( $games as $game_id ) {
-            $game_key   = 'game_' . $game_id;
+            $game_key = 'game_' . $game_id;
 
             if ( Game::findOrFail( $game_id )->is_over() ) {
                 continue;
