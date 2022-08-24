@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title'); // Round Name
             $table->string('slug')->unique();// Slug
-            $table->date( 'start_date' ); // Start Date
-            $table->date( 'end_date' ); // End Date
-            $table->foreignId( 'season_id' ); // Season to associate with
+            $table->date( 'start_date' )->nullable(); // Start Date
+            $table->date( 'end_date' )->nullable(); // End Date
+            $table->foreignId( 'season_id' )->nullable(); // Season to associate with
             $table->timestamps();
         });
     }

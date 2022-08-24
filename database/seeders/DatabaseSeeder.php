@@ -6,10 +6,12 @@ use App\Models\Round;
 use App\Models\Season;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder {
+
     const teams = [
         'Arizona Cardinals',
         'Atlanta Falcons',
@@ -57,14 +59,29 @@ class DatabaseSeeder extends Seeder {
             'password' => bcrypt( 'password' ),
         ] );
 
-        User::factory()->create( [
-            'name'     => 'John Doe',
-            'email'    => 'john@doe.com',
-            'password' => bcrypt( 'password' ),
-        ] );
-
         Season::factory()->create(
             [ 'title' => '2022' ],
+        );
+
+        Round::factory()->create(
+            [
+                'title'      => 'Week 1',
+                'slug'       => Str::slug( 'Week 1' ),
+            ],
+        );
+
+        Setting::factory()->create(
+            [
+                'name'  => 'active_season',
+                'value' => 1,
+            ],
+        );
+
+        Setting::factory()->create(
+            [
+                'name'  => 'active_round',
+                'value' => 1,
+            ],
         );
 
         $this->generate_teams();
@@ -78,4 +95,5 @@ class DatabaseSeeder extends Seeder {
             ] );
         }
     }
+
 }
