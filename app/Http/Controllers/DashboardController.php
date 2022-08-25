@@ -29,6 +29,7 @@ class DashboardController extends Controller {
     }
 
     public function update() {
+        dd( request()->all() );
         $games_data = request()->all();
         $games      = $games_data['games'] ?? [];
 
@@ -56,8 +57,6 @@ class DashboardController extends Controller {
             ];
 
             $pick = Pick::where( 'game_id', $game_id )->where( 'user_id', request()->user()->id );
-
-            dd( $pick );
 
             if ( $pick->exists() ) {
                 $pick->update( $attributes );
