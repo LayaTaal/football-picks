@@ -60,7 +60,7 @@ class DashboardController extends Controller {
             if ( $pick->exists() ) {
                 $pick->update( $attributes );
             } else {
-                Pick::insert( $attributes );
+                $pick->insert( $attributes );
             }
         }
 
