@@ -29,7 +29,6 @@ class DashboardController extends Controller {
     }
 
     public function update() {
-        dd( request()->all() );
         $games_data = request()->all();
         $games      = $games_data['games'] ?? [];
 
