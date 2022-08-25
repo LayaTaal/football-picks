@@ -1,5 +1,5 @@
 <div {{ $attributes }}>
-    <form method="POST" action="/dashboard/" enctype="multipart/form-data">
+    <form method="POST" action="/dashboard" enctype="multipart/form-data">
         @csrf
         @method( 'PATCH' )
 
