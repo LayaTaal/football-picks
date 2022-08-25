@@ -57,6 +57,8 @@ class DashboardController extends Controller {
 
             $pick = Pick::where( 'game_id', $game_id )->where( 'user_id', request()->user()->id );
 
+            dd( $pick );
+
             if ( $pick->exists() ) {
                 $pick->update( $attributes );
             } else {
