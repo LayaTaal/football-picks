@@ -13,7 +13,7 @@
         @endif
     </x-section>
 
-    <x-section title="Weekly Standings">
+    <x-section :title="$active_round->title . ' Standings'">
         <x-league-picks />
     </x-section>
 
