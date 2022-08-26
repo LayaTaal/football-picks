@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\AdminRoundController;
 use App\Http\Controllers\AdminSeasonController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminSettingController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
@@ -59,6 +60,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+    Route::get( 'profile', [ UserProfileController::class, 'index' ] );
+    Route::patch( 'profile', [ UserProfileController::class, 'update' ] );
 });
 
 Route::middleware( 'can:admin' )->group( function() {
