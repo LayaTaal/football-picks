@@ -41,6 +41,12 @@ class SeasonStats extends Component {
         for ( $i = 0; $i <= count( $rounds ); $i ++ ) {
             $round = [];
 
+            if ( $rounds->has( $i ) ) {
+                if ( ! $rounds[ $i ]->is_complete() ) {
+                    return $season_stats;
+                }
+            }
+
             for ( $j = 0; $j < count( $users ); $j ++ ) {
                 if ( $i === 0 ) {
                     $round[] = $users[ $j ]->name;

@@ -12,7 +12,7 @@
                 <?php $correct_picks = 0; ?>
                 @foreach( $user->picks_this_week as $pick )
                     <?php $correct_picks = $pick->game->winning_team() === $pick->team->id ? $correct_picks + 1 : $correct_picks; ?>
-                    @if( $pick->game->is_over() )
+                    @if( $pick->game->has_score() )
                         <li class="mx-4 my-1">{{ $pick->team->name }}</li>
                     @endif
                 @endforeach

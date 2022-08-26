@@ -18,4 +18,14 @@ class Round extends Model
     public function games() {
         return $this->hasMany( Game::class );
     }
+
+    public function is_complete() {
+         foreach ( $this->games as $game ) {
+            if ( ! $game->has_score() )  {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
