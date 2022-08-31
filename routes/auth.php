@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminGameController;
 use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRoundController;
 use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\UserProfileController;
@@ -71,4 +72,7 @@ Route::middleware( 'can:admin' )->group( function() {
     Route::resource( 'admin/games', AdminGameController::class )->except( 'show' );
     Route::get( 'admin/settings/', [ AdminSettingController::class, 'index' ] );
     Route::patch( 'admin/settings/', [ AdminSettingController::class, 'update' ] );
+
+    Route::get( 'admin/users', [ AdminUserController::class, 'index' ] );
+    Route::delete( 'admin/user/{id}', [ AdminUserController::class, 'destroy' ] );
 } );
