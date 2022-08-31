@@ -7,13 +7,11 @@ use Illuminate\Contracts\View\View;
 
 class UserPicks extends Component {
 
-	public function __construct(
-		public $games
-	) {
-	}
+    public function __construct( public $games ) {
+    }
 
-	public function render(): View {
-		return view( 'components.picks.user-picks' );
-	}
+    public function render(): View {
+        return view( 'components.picks.user-picks' );
+    }
 
 }

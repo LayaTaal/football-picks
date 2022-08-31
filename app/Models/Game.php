@@ -19,7 +19,7 @@ class Game extends Model {
     }
 
     public function user_pick() {
-        $pick = $this->hasone( Pick::class )->where( 'user_id', Auth::id() );
+        $pick = $this->hasOne( Pick::class )->where( 'user_id', Auth::id() );
 
         if ( ! $pick ) {
             return [];
