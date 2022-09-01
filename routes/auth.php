@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AdminGameController;
 use App\Http\Controllers\AdminTeamController;
-use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRoundController;
 use App\Http\Controllers\AdminSeasonController;

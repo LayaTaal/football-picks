@@ -7,18 +7,16 @@ use App\Models\Pick;
 use App\Models\Team;
 use App\Models\Round;
 use App\Models\Season;
+use App\Models\Survivor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller {
 
     public function index( Request $request ) {
-        $settings = config( 'settings' );
-
+        $settings      = config( 'settings' );
         $current_games = Game::where( 'round_id', $settings['active_round'] )->get();
-
-        $sorted_games = $current_games->sortBy( 'date' );
-
+        $sorted_games  = $current_games->sortBy( 'date' );
         $sorted_games->values()->all();
 
         return view( '/dashboard', [
@@ -63,6 +61,22 @@ class DashboardController extends Controller {
                 $pick->insert( $attributes );
             }
         }
+
+        $survivor_picks = auth()->user()->survivor_picks();
+        $survivor_game  = Game::where( 'season_id', config( 'settings' )['active_season'] )
+                              ->where( 'round_id', config( 'settings' )['active_round'] )
+                              ->where( 'home_team', $games_data['survivor_pick'] )
+                              ->orWhere( 'away_team', $games_data['survivor_pick'] )->get();
+
+        $survivor_attrs = [
+            'user_id'   => request()->user()->id,
+            'game_id'   => $survivor_game[ 0 ]->id,
+            'team_id'   => (int) $games_data['survivor_pick'],
+            'season_id' => config( 'settings' )['active_season'],
+            'round_id'  => config( 'settings' )['active_round'],
+        ];
+
+        Survivor::create( $survivor_attrs );
 
         return back()->with( 'success', 'Picks saved!' );
     }

@@ -110,6 +110,8 @@
             </tbody>
         </table>
 
+        <x-picks.survivor-picks />
+
         <div class="mt-6">
             <x-button type="submit">Make Picks</x-button>
         </div>

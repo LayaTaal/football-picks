@@ -14,7 +14,6 @@ class Team extends Model {
     public function get_current_game(): Game {
         $settings = config( 'settings' );
 
-        // todo: there is a potential problem here and games should store the season they are from as well
         $game = Game::where( 'away_team', $this->id )
                    ->orWhere( 'home_team', $this->id )
                    ->where( 'round_id', $settings['active_round'] )
