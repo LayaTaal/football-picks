@@ -6,11 +6,13 @@ use App\Models\Round;
 use App\Models\Season;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Cache\Factory;
 
 class AdminSettingController extends Controller {
 
     /**
      * todo: Need to add error handling when no active season or round
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index() {
@@ -25,13 +27,18 @@ class AdminSettingController extends Controller {
         ] );
     }
 
-    public function update( Setting $setting ) {
+    public function update( Request $request, Setting $setting, Factory $cache ) {
         $attributes = request()->validate( [
             'active_season' => [ 'required' ],
             'active_round'  => [ 'required' ],
         ] );
 
-        $setting->update( $attributes );
+        $active_season = Setting::where( 'name', 'active_season' )->first();
+        $active_round  = Setting::where( 'name', 'active_round' )->first();
+
+        $active_season->update( [ 'value' => $attributes['active_season'] ] );
+        $active_round->update( [ 'value' => $attributes['active_round'] ] );
+        $cache->forget( 'settings' );
 
         return redirect( '/admin/settings/' )->with( 'success', 'Settings updated successfully.' );
     }

@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Pick;
-use App\Models\Team;
 use App\Models\Round;
 use App\Models\Season;
 use App\Models\Survivor;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller {
 

@@ -11,19 +11,27 @@ class Team extends Model {
 
     protected $guarded = [];
 
-    public function get_current_game(): Game {
+    public function get_current_game(): Game|null {
         $settings = config( 'settings' );
 
-        $game = Game::where( 'away_team', $this->id )
-                   ->orWhere( 'home_team', $this->id )
-                   ->where( 'round_id', $settings['active_round'] )
-                   ->where( 'season_id', $settings['active_round'] )->get();
+        $game = Game::where( 'round_id', $settings['active_round'] )
+                    ->where( 'season_id', $settings['active_round'] )
+                    ->orWhere( 'away_team', $this->id )
+                    ->orWhere( 'home_team', $this->id );
 
-        return $game[0];
+        if ( ! $game->exists() ) {
+            return null;
+        }
+
+        return $game->get()[0];
     }
 
-    public function score(): int {
+    public function score(): int|null {
         $current_game = $this->get_current_game();
+
+        if ( $current_game->has_score() ) {
+            return null;
+        }
 
         if ( $current_game->home_team === $this->id ) {
             return $current_game->home_team_score ?? 0;

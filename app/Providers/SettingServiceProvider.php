@@ -22,12 +22,12 @@ class SettingServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot( Factory $cache, Setting $settings ) {
-        $settings = $cache->remember( 'settings', 60, function () use ( $settings ) {
-            return $settings->pluck( 'value', 'name' )->all();
+    public function boot( Factory $cache, Setting $setting ) {
+        $setting = $cache->remember( 'settings', 60, function () use ( $setting ) {
+            return $setting->pluck( 'value', 'name' )->all();
         } );
 
-        config()->set( 'settings', $settings );
+        config()->set( 'settings', $setting );
     }
 
 }

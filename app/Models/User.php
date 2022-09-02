@@ -64,8 +64,7 @@ class User extends Authenticatable {
 
     public function survivor_picks() {
         return $this->hasOne( Survivor::class )
-            ->where( 'season_id', config( 'settings' )['active_season'] )
-            ->where( 'round_id', config( 'settings' )['active_round'] );
+            ->where( 'season_id', config( 'settings' )['active_season'] );
     }
 
 }
