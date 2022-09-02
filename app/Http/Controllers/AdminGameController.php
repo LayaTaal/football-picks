@@ -67,4 +67,12 @@ class AdminGameController extends Controller {
         return redirect( '/admin/games/' )->with( 'success', 'Game updated successfully.' );
     }
 
+    public function destroy( Game $game ) {
+        $game->picks()->delete();
+        $game->survivors()->delete();
+        $game->delete();
+
+        return back()->with( 'success', 'Game deleted successfully' );
+    }
+
 }

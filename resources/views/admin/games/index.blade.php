@@ -10,32 +10,64 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 @if ( $games->isNotEmpty() )
                     <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-semibold text-gray-900">
+                                        Game
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                    <div class="text-sm font-semibold text-gray-900">
+                                        Date
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                    <div class="text-sm font-semibold text-gray-900">
+                                        Time
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                    <div class="text-sm font-semibold text-gray-900">
+                                        Score
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+
                         <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($games as $game)
+                            <?php $away_team = \App\Models\Team::find( $game->away_team ); ?>
+                            <?php $home_team = \App\Models\Team::find( $game->home_team ); ?>
+
+
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ $game->away_team }} at {{ $game->home_team }}
+                                            {{ $away_team->name }} at {{ $home_team->name }}
                                         </div>
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="text-sm font-medium text-gray-900">
-                                        Date
+                                        {{ $game->formatted_date() }}
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="text-sm font-medium text-gray-900">
-                                        Time
+                                        {{ $game->formatted_time() }} ET
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="text-sm font-medium text-gray-900">
-                                        Score
+                                        {{ $away_team->score() }} - {{ $home_team->score() }}
                                     </div>
                                 </td>
 

@@ -18,6 +18,14 @@ class Game extends Model {
         return $this->belongsTo( Round::class );
     }
 
+    public function picks() {
+        return $this->hasMany( Pick::class );
+    }
+
+    public function survivors() {
+        return $this->hasMany( Survivor::class );
+    }
+
     public function user_pick() {
         $pick = $this->hasOne( Pick::class )->where( 'user_id', Auth::id() );
 
