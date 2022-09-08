@@ -60,21 +60,28 @@ class DashboardController extends Controller {
             }
         }
 
-        $survivor_picks = auth()->user()->survivor_picks();
-        $survivor_game  = Game::where( 'season_id', config( 'settings' )['active_season'] )
-                              ->where( 'round_id', config( 'settings' )['active_round'] )
-                              ->where( 'home_team', $games_data['survivor_pick'] )
-                              ->orWhere( 'away_team', $games_data['survivor_pick'] )->get();
+        if ( array_key_exists( 'survivor_pick', $games_data ) ) {
+            $survivor_game  = Game::where( 'season_id', config( 'settings' )['active_season'] )
+                                  ->where( 'round_id', config( 'settings' )['active_round'] )
+                                  ->where( 'home_team', $games_data['survivor_pick'] )
+                                  ->orWhere( 'away_team', $games_data['survivor_pick'] )->get();
 
-        $survivor_attrs = [
-            'user_id'   => request()->user()->id,
-            'game_id'   => $survivor_game[ 0 ]->id,
-            'team_id'   => (int) $games_data['survivor_pick'],
-            'season_id' => config( 'settings' )['active_season'],
-            'round_id'  => config( 'settings' )['active_round'],
-        ];
+            $survivor_attrs = [
+                'user_id'   => request()->user()->id,
+                'game_id'   => $survivor_game[ 0 ]->id,
+                'team_id'   => (int) $games_data['survivor_pick'],
+                'season_id' => config( 'settings' )['active_season'],
+                'round_id'  => config( 'settings' )['active_round'],
+            ];
 
-        Survivor::create( $survivor_attrs );
+            $survivor_pick = Survivor::where( 'game_id', $survivor_game[ 0 ]->id )->where( 'user_id', request()->user()->id );
+
+            if ( $survivor_pick->exists() ) {
+                $survivor_pick->update( $survivor_attrs );
+            } else {
+                $survivor_pick->insert( $survivor_attrs );
+            }
+        }
 
         return back()->with( 'success', 'Picks saved!' );
     }
