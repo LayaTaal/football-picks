@@ -13,6 +13,6 @@
         {{ $team->name }}
     </label>
     @if( $game->has_score() )
-        <span class="ml-2 font-bold">({{ $team->score() }})</span>
+        <span class="ml-2 font-bold">({{ $team->score( $game ) }})</span>
     @endif
 </div>

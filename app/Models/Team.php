@@ -15,7 +15,7 @@ class Team extends Model {
         $settings = config( 'settings' );
 
         $game = Game::where( 'round_id', $settings['active_round'] )
-                    ->where( 'season_id', $settings['active_round'] )
+                    ->where( 'season_id', $settings['active_season'] )
                     ->orWhere( 'away_team', $this->id )
                     ->orWhere( 'home_team', $this->id );
 
@@ -28,11 +28,6 @@ class Team extends Model {
 
     public function score( Game $game = null ): int|null {
         $current_game = $game ?: $this->get_current_game();
-
-        var_dump( $this->id );
-        var_dump( $current_game->id );
-        var_dump( $current_game->away_team );
-        var_dump( $current_game->away_team_score );
 
         if ( $current_game->home_team === $this->id ) {
             return $current_game->home_team_score ?? 0;
