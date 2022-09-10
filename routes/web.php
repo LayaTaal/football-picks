@@ -14,8 +14,12 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get( '/', function () {
-    return view( 'welcome' );
+Route::middleware( 'guest' )->get( '/', function() {
+    return redirect( 'login' );
+} );
+
+Route::middleware( 'auth' )->get( '/', function() {
+    return redirect( '/dashboard' );
 } );
 
 Route::get( '/dashboard', [ DashboardController::class, 'index' ] )->middleware( [ 'auth' ] )->name( 'dashboard' );
