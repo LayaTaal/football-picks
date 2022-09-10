@@ -26,12 +26,8 @@ class Team extends Model {
         return $game->get()[0];
     }
 
-    public function score(): int|null {
-        $current_game = $this->get_current_game();
-
-        if ( $current_game->has_score() ) {
-            return null;
-        }
+    public function score( Game $game = null ): int|null {
+        $current_game = $game ?: $this->get_current_game();
 
         if ( $current_game->home_team === $this->id ) {
             return $current_game->home_team_score ?? 0;
