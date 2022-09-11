@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTime;
 use DateTimeZone;
+use DateInterval;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,9 +47,13 @@ class Game extends Model {
 
     public function is_over(): bool {
         $current_date = new DateTime( 'now', new DateTimeZone( 'America/New_York' ) );
-        $game_date    = new DateTime( $this->date, new DateTimeZone( 'America/New_York' ) );
+        $game_date    = new DateTime( $this->date, new DateTimeZone( 'UTC' ) );
+        $game_date->setTimeZone( new DateTimeZone( 'America/New_York' ) );
 
-        return $current_date >= $game_date;
+        // todo: look into better way to handle this in the future
+        $revised_game_date = (clone $game_date)->add( new DateInterval("PT4H"));
+
+        return $current_date >= $revised_game_date;
     }
 
     public function has_score(): bool {
