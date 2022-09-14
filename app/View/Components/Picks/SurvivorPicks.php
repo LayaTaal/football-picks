@@ -49,7 +49,7 @@ class SurvivorPicks extends Component {
             $game = Game::find( $pick->game_id );
 
             if ( $game->has_score() ) {
-                if ( $pick->team_id !== $game->winning_team() ) {
+                if ( $pick->team_id !== $game->winning_team() && ! $game->tie_score() ) {
                     $incorrect_picks++;
                 }
             }

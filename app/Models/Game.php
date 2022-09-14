@@ -80,4 +80,12 @@ class Game extends Model {
 
         return null;
     }
+
+    public function tie_score() {
+        if ( $this->home_team_score === $this->away_team_score ) {
+            return true;
+        }
+
+        return false;
+    }
 }
