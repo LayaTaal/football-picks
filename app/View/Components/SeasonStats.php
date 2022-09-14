@@ -38,7 +38,17 @@ class SeasonStats extends Component {
 
         $season_stats = [];
 
-        for ( $i = 0; $i <= count( $rounds ); $i ++ ) {
+        $header = [
+            'Rounds'
+        ];
+
+        for ( $i = 0; $i < count( $users ); $i ++ ) {
+            array_push( $header, $users[ $i ]->name );
+        }
+
+        $season_stats[] = $header;
+
+        for ( $i = 0; $i < count( $rounds ); $i++ ) {
             $round = [];
 
             if ( $rounds->has( $i ) ) {
@@ -47,30 +57,22 @@ class SeasonStats extends Component {
                 }
             }
 
-            for ( $j = 0; $j < count( $users ); $j ++ ) {
-                if ( $i === 0 ) {
-                    $round[] = $users[ $j ]->name;
-                } else {
-                    $user_picks    = $users[ $j ]->picks()->where( 'round_id', $rounds[ $i - 1 ]->id )->get();
-                    $correct_picks = 0;
+            for ( $j = 0; $j < count( $users ); $j++ ) {
+                $user_picks    = $users[ $j ]->picks()->where( 'round_id', $rounds[ $i ]->id )->get();
+                $correct_picks = 0;
 
-                    foreach ( $user_picks as $pick ) {
-                        $winning_team = $pick->game->winning_team();
+                foreach ( $user_picks as $pick ) {
+                    $winning_team = $pick->game->winning_team();
 
-                        if ( $winning_team === $pick->team->id ) {
-                            $correct_picks += 1;
-                        }
+                    if ( $winning_team === $pick->team->id ) {
+                        $correct_picks += 1;
                     }
-
-                    $round[] = $correct_picks;
                 }
+
+                $round[] = $correct_picks;
             }
 
-            if ( $i === 0 ) {
-                array_unshift( $round, 'Rounds' );
-            } else {
-                array_unshift( $round, $rounds[ $i - 1 ]->title );
-            }
+            array_unshift( $round, $rounds[ $i ]->title );
 
             $season_stats[] = $round;
         }
