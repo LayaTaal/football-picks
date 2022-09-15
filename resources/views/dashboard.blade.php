@@ -20,4 +20,8 @@
     <x-section title="Season Standings">
         <x-season-stats />
     </x-section>
+
+    <x-section title="Survivor Picks">
+        <x-survivor-stats />
+    </x-section>
 </x-app-layout>
