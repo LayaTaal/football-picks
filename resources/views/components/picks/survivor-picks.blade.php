@@ -25,7 +25,7 @@
                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 name="survivor_pick"
                 id="survivor_pick"
-                required>
+            >
                 <option value="">Select Team</option>
 
                 @foreach( $teams as $team )
