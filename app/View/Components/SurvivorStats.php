@@ -37,7 +37,7 @@ class SurvivorStats extends Component
             return $round->is_complete();
         } );
 
-        $users = User::all();
+        $users = User::all_current_first();
 
         $table = [];
 
@@ -57,7 +57,7 @@ class SurvivorStats extends Component
             for ( $j = 0; $j < count( $users ); $j++ ) {
                 $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[$i]->id)->first();
                 $team = Team::find( $survivor_pick->id );
-                $game = Game::where( 'round_id', config('settings.active_round' ) )
+                $game = Game::where( 'round_id', config($rounds[$i]->id ) )
                     ->where( 'season_id', config('settings.active_season' ) )
                     ->orWhere( 'home_team', $team->id )
                     ->orWhere( 'away_team', $team->id )
