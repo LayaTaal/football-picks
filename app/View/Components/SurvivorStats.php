@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Game;
 use App\Models\Round;
 use App\Models\Team;
 use App\Models\User;
@@ -56,8 +57,16 @@ class SurvivorStats extends Component
             for ( $j = 0; $j < count( $users ); $j++ ) {
                 $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[$i]->id)->first();
                 $team = Team::find( $survivor_pick->id );
+                $game = Game::where( 'round_id', config('settings.active_round' ) )
+                    ->where( 'season_id', config('settings.active_season' ) )
+                    ->orWhere( 'home_team', $team->id )
+                    ->orWhere( 'away_team', $team->id )
+                    ->first();
 
-                array_push( $row, $team );
+                array_push( $row, [
+                    'team' => $team,
+                    'team_won' => $game->winning_team() === $survivor_pick->id || $game->tie_score(),
+                ] );
             }
 
             array_push( $table, $row );

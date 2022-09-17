@@ -36,4 +36,8 @@ class Team extends Model {
         }
     }
 
+    public function won_game( Game $game ): bool {
+        return $game->winning_team() === $this->id;
+    }
+
 }

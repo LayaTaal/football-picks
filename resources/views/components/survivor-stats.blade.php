@@ -35,8 +35,8 @@
                         @else
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="text-sm font-bold text-gray-900">
-                                        {{ $col_data->name }}
+                                    <div class="text-sm font-bold {{ $col_data['team_won'] ? 'text-green-500' : 'text-gray-900 line-through' }}">
+                                        {{ $col_data['team']->name }}
                                     </div>
                                 </div>
                             </td>
