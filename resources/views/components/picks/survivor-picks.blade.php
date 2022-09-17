@@ -13,9 +13,7 @@
     @endif
 
     @if( $round_started )
-        @foreach( $user_picks as $pick )
-            This week's survivor pick: <span class="font-semibold">{{ \App\Models\Team::find( $pick->team_id )->name }}</span>
-        @endforeach
+        This week's survivor pick: <span class="font-semibold">{{ \App\Models\Team::find( $this_weeks_pick )->name }}</span>
     @else
 
         <div class="mb-6 md:flex md:justify-start md:flex-nowrap md:items-center md:gap-4">
