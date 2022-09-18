@@ -60,7 +60,7 @@ class DashboardController extends Controller {
             }
         }
 
-        if ( $games_data['survivor_pick'] !== null ) {
+        if ( array_key_exists( 'survivor_pick', $games_data ) && $games_data['survivor_pick'] !== null ) {
             $survivor_game  = Game::where( 'season_id', config( 'settings' )['active_season'] )
                                   ->where( 'round_id', config( 'settings' )['active_round'] )
                                   ->where( 'home_team', $games_data['survivor_pick'] )
