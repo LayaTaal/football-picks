@@ -57,7 +57,7 @@ class Game extends Model {
     }
 
     public function has_score(): bool {
-        return $this->home_team_score && $this->away_team_score;
+        return $this->home_team_score || $this->away_team_score;
     }
 
     public function home_team_won(): ?bool {
