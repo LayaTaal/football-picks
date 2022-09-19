@@ -13,7 +13,11 @@
     @endif
 
     @if( $round_started )
-        This week's survivor pick: <span class="font-semibold">{{ \App\Models\Team::find( $this_weeks_pick )->name }}</span>
+        @if( $this_weeks_pick !== 0 )
+            This week's survivor pick: <span class="font-semibold">{{ \App\Models\Team::find( $this_weeks_pick )->name }}</span>
+        @else
+            You did not pick a team this week!
+        @endif
     @else
 
         <div class="mb-6 md:flex md:justify-start md:flex-nowrap md:items-center md:gap-4">
