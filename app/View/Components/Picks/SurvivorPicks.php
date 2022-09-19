@@ -39,6 +39,7 @@ class SurvivorPicks extends Component {
         $teams_already_picked = [];
         $incorrect_picks = 0;
 
+        // Todo: need to check for the case when a user didn't make a pick at all
         foreach ( $user_picks as $pick ) {
             if ( $pick->round_id !== config( 'settings' )['active_round'] ) {
                 $teams_already_picked[] = $pick->team_id;
