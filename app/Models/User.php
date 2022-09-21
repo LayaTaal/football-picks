@@ -45,10 +45,10 @@ class User extends Authenticatable {
 
     public static function all_current_first() {
         return User::all()
-             ->filter( function ( $user ) {
-                 return $user->id !== Auth::user()->id;
-             } )
-             ->prepend( Auth::user() );
+                   ->filter( function ( $user ) {
+                       return $user->id !== Auth::user()->id;
+                   } )
+                   ->prepend( Auth::user() );
     }
 
     public function picks() {
@@ -57,14 +57,51 @@ class User extends Authenticatable {
 
     public function picks_this_week() {
         return $this->hasMany( Pick::class )
-            ->where( 'season_id', config( 'settings' )['active_season'] )
-            ->where( 'round_id', config( 'settings' )['active_round'] )
-            ->orderBy( 'team_id' );
+                    ->where( 'season_id', config( 'settings' )['active_season'] )
+                    ->where( 'round_id', config( 'settings' )['active_round'] )
+                    ->orderBy( 'team_id' );
     }
 
     public function survivor_picks() {
         return $this->hasMany( Survivor::class )
-            ->where( 'season_id', config( 'settings' )['active_season'] );
+                    ->where( 'season_id', config( 'settings' )['active_season'] );
+    }
+
+    /**
+     * Get the users status in survivor. This will return an int which indicates their status.
+     *
+     * 2 = still 2 tries remaining
+     * 1 = 1 try left
+     * 0  = eliminated
+     */
+    public function survivor_status() {
+        // Start user with 2 points
+        $points = 2;
+
+        // Get all rounds that have started
+        $rounds = ( new Round )->all_in_progress();
+
+        foreach ( $rounds as $round ) {
+            if ( $points === 0 ) {
+                break;
+            }
+
+            $survivor_pick = $this->survivor_picks()->where( 'round_id', $round->id )->first();
+
+            // Check if the current user has made a pick in that round
+            if ( ! $survivor_pick ) {
+                $points = $points - 1;
+                continue;
+            }
+
+            // Check if their pick won or lost
+            $winning_team = ( new Game )->find( $survivor_pick->game_id )->winning_team();
+            if ( $survivor_pick->team_id !== $winning_team ) {
+                $points = $points - 1;
+            }
+        }
+
+        return $points;
     }
 
 }

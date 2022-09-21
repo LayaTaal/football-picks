@@ -34,27 +34,17 @@ class SurvivorPicks extends Component {
         });
 
         // Get all survivor picks for current user in this season
+        $user_survivor_stats = auth()->user()->survivor_status();
         $user_picks      = auth()->user()->survivor_picks()->get();
         $this_weeks_pick = 0;
         $teams_already_picked = [];
-        $incorrect_picks = 0;
 
-        // Todo: need to check for the case when a user didn't make a pick at all
         foreach ( $user_picks as $pick ) {
             if ( $pick->round_id !== config( 'settings' )['active_round'] ) {
                 $teams_already_picked[] = $pick->team_id;
             } else {
                 $this_weeks_pick = $pick->team_id;
             }
-
-            $game = Game::find( $pick->game_id );
-
-            if ( $game->has_score() ) {
-                if ( $pick->team_id !== $game->winning_team() && ! $game->tie_score() ) {
-                    $incorrect_picks++;
-                }
-            }
-
         }
 
         // Remove teams already picked from teams array
@@ -68,7 +58,7 @@ class SurvivorPicks extends Component {
             'this_weeks_pick' => $this_weeks_pick,
             'previous_picks'  => $teams_already_picked,
             'round_started'   => Round::find( config( 'settings' )['active_round'] )->has_started(),
-            'incorrect_picks' => $incorrect_picks,
+            'survivor_status' => auth()->user()->survivor_status(),
         ] );
     }
 

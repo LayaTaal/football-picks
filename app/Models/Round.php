@@ -29,6 +29,14 @@ class Round extends Model
         return false;
     }
 
+    public function all_in_progress() {
+     return Round::all()
+        ->where( 'season_id', config( 'settings.active_season'))
+        ->filter( function( Round $round ) {
+            return $round->has_started();
+        });
+    }
+
     public function is_complete() {
          foreach ( $this->games as $game ) {
             if ( ! $game->has_score() )  {

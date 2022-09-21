@@ -1,14 +1,14 @@
 <div class="border-t pt-10 pb-2">
     <h2 class="text-2xl mb-6">
         Are you a survivor?
-        @if( $incorrect_picks >= 2 )
+        @if( $survivor_status === 0 )
             <span class="text-red-600">(eliminated)</span>
         @else
             <span class="text-green-600">(still alive)</span>
         @endif
     </h2>
 
-    @if( $incorrect_picks >= 2 )
+    @if( $survivor_status === 0 )
         <?php return ?>
     @endif
 
@@ -42,7 +42,7 @@
 
     @endif
 
-    <div class="text-sm mt-6 mb-2">Remaining tries: <span class="{{ $incorrect_picks === 0 ? 'text-green-600' : 'text-red-600'}}">{{ 2 - $incorrect_picks }}</span></div>
+    <div class="text-sm mt-6 mb-2">Remaining tries: <span class="{{ $survivor_status > 0 ? 'text-green-600' : 'text-red-600'}}">{{ $survivor_status }}</span></div>
 
     @if( $previous_picks )
         <div class="text-sm md:flex md:flex-nowrap gap-2 mb-2">
