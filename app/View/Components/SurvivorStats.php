@@ -41,12 +41,14 @@ class SurvivorStats extends Component
 
         $table = [];
 
+        // Setup our header row
         $header = [
             'Rounds'
         ];
 
+        // Loop through all users and append to header row
         for ( $i = 0; $i < count( $users ); $i ++ ) {
-            array_push( $header, $users[ $i ]->name );
+            array_push( $header, $users[ $i ] );
         }
 
         array_push( $table, $header );
@@ -56,7 +58,14 @@ class SurvivorStats extends Component
 
             for ( $j = 0; $j < count( $users ); $j++ ) {
                 $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[$i]->id)->first();
-                $team = Team::find( $survivor_pick->id );
+
+                if ( ! $survivor_pick ) {
+                    array_push( $row, null );
+
+                    continue;
+                }
+
+                $team = Team::find( $survivor_pick->team_id );
                 $game = Game::where( 'round_id', config($rounds[$i]->id ) )
                     ->where( 'season_id', config('settings.active_season' ) )
                     ->orWhere( 'home_team', $team->id )
@@ -65,7 +74,7 @@ class SurvivorStats extends Component
 
                 array_push( $row, [
                     'team' => $team,
-                    'team_won' => $game->winning_team() === $survivor_pick->id || $game->tie_score(),
+                    'team_won' => $game->winning_team() === $survivor_pick->team_id || $game->tie_score(),
                 ] );
             }
 
