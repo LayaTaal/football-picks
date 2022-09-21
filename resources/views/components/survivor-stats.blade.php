@@ -1,5 +1,5 @@
 <div>
-    <table class="min-w-full divide-y divide-gray-200 block overflow-x-auto md:table">
+    <table class="min-w-full divide-y divide-gray-200 block overflow-x-scroll md:table">
 
         @foreach( $table as $row_id => $row_data )
             @if( $row_id === 0 )

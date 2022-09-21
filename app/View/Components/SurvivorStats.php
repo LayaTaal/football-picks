@@ -66,10 +66,12 @@ class SurvivorStats extends Component
                 }
 
                 $team = Team::find( $survivor_pick->team_id );
-                $game = Game::where( 'round_id', config($rounds[$i]->id ) )
+                $game = Game::where( 'round_id', $rounds[$i]->id )
                     ->where( 'season_id', config('settings.active_season' ) )
-                    ->orWhere( 'home_team', $team->id )
-                    ->orWhere( 'away_team', $team->id )
+                    ->where( function( $query ) use ( $team ) {
+                        $query->where( 'home_team', $team->id )
+                        ->orWhere( 'away_team', $team->id );
+                    })
                     ->first();
 
                 array_push( $row, [
