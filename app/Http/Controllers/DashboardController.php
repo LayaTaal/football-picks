@@ -76,6 +76,13 @@ class DashboardController extends Controller {
 
             $survivor_pick = Survivor::where( 'game_id', $survivor_game[ 0 ]->id )->where( 'user_id', request()->user()->id );
 
+            $debug = [
+                'game_id' => $survivor_game[ 0 ]->id,
+                'pick_exists' => $survivor_pick->exists(),
+            ];
+
+            dd( $debug );
+
             if ( $survivor_pick->exists() ) {
                 $survivor_pick->update( $survivor_attrs );
             } else {
