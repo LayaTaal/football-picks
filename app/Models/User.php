@@ -67,6 +67,12 @@ class User extends Authenticatable {
                     ->where( 'season_id', config( 'settings' )['active_season'] );
     }
 
+    public function survivor_pick_this_week() {
+        return $this->hasOne( Survivor::class )
+                    ->where( 'round_id', config( 'settings' )['active_round'] )
+                    ->where( 'season_id', config( 'settings' )['active_season'] );
+    }
+
     /**
      * Get the users status in survivor. This will return an int which indicates their status.
      *

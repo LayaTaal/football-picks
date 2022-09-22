@@ -64,22 +64,24 @@ class DashboardController extends Controller {
             $survivor_game  = Game::where( 'season_id', config( 'settings' )['active_season'] )
                                   ->where( 'round_id', config( 'settings' )['active_round'] )
                                   ->where( 'home_team', $games_data['survivor_pick'] )
-                                  ->orWhere( 'away_team', $games_data['survivor_pick'] )->get();
+                                  ->orWhere( 'away_team', $games_data['survivor_pick'] )->first();
 
             $survivor_attrs = [
                 'user_id'   => request()->user()->id,
-                'game_id'   => $survivor_game[ 0 ]->id,
+                'game_id'   => $survivor_game->id,
                 'team_id'   => (int) $games_data['survivor_pick'],
                 'season_id' => config( 'settings' )['active_season'],
                 'round_id'  => config( 'settings' )['active_round'],
             ];
 
-            $survivor_pick = Survivor::where( 'game_id', $survivor_game[ 0 ]->id )->where( 'user_id', request()->user()->id )->first();
+            $survivor_pick = auth()->user()->survivor_pick_this_week();
 
-            if ( $survivor_pick ) {
+            if ( $survivor_pick->exists() ) {
+                $survivor_pick->game_id = $survivor_game->id;
+                $survivor_pick->team_id = (int) $games_data['survivor_pick'];
                 $survivor_pick->update( $survivor_attrs );
             } else {
-                $survivor_pick->insert( $survivor_attrs );
+                Survivor::create( $survivor_attrs );
             }
         }
 
