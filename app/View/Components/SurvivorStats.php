@@ -8,15 +8,13 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\View\Component;
 
-class SurvivorStats extends Component
-{
+class SurvivorStats extends Component {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
@@ -25,15 +23,14 @@ class SurvivorStats extends Component
      *
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
-    public function render()
-    {
-        return view('components.survivor-stats', [
+    public function render() {
+        return view( 'components.survivor-stats', [
             'table' => $this->create_table(),
-        ]);
+        ] );
     }
 
     private function create_table(): array {
-        $rounds = Round::all()->filter( function( $round ) {
+        $rounds = Round::all()->filter( function ( $round ) {
             return $round->is_complete();
         } );
 
@@ -53,11 +50,11 @@ class SurvivorStats extends Component
 
         array_push( $table, $header );
 
-        for ( $i = 0; $i < count( $rounds ); $i++ ) {
+        for ( $i = 0; $i < count( $rounds ); $i ++ ) {
             $row = [ $rounds[ $i ]->title ];
 
-            for ( $j = 0; $j < count( $users ); $j++ ) {
-                $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[$i]->id)->first();
+            for ( $j = 0; $j < count( $users ); $j ++ ) {
+                $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[ $i ]->id )->first();
 
                 if ( ! $survivor_pick ) {
                     array_push( $row, null );
@@ -66,16 +63,16 @@ class SurvivorStats extends Component
                 }
 
                 $team = Team::find( $survivor_pick->team_id );
-                $game = Game::where( 'round_id', $rounds[$i]->id )
-                    ->where( 'season_id', config('settings.active_season' ) )
-                    ->where( function( $query ) use ( $team ) {
-                        $query->where( 'home_team', $team->id )
-                        ->orWhere( 'away_team', $team->id );
-                    })
-                    ->first();
+                $game = Game::where( 'round_id', $rounds[ $i ]->id )
+                            ->where( 'season_id', config( 'settings.active_season' ) )
+                            ->where( function ( $query ) use ( $team ) {
+                                $query->where( 'home_team', $team->id )
+                                      ->orWhere( 'away_team', $team->id );
+                            } )
+                            ->first();
 
                 array_push( $row, [
-                    'team' => $team,
+                    'team'     => $team,
                     'team_won' => $game->winning_team() === $survivor_pick->team_id || $game->tie_score(),
                 ] );
             }
