@@ -72,7 +72,7 @@ class SurvivorStats extends Component {
                             ->first();
 
                 array_push( $row, [
-                    'team'     => $team,
+                    'team'     => $team->name,
                     'team_won' => $game->winning_team() === $survivor_pick->team_id || $game->tie_score(),
                 ] );
             }
