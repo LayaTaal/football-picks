@@ -78,6 +78,13 @@ class SurvivorStats extends Component {
             }
 
             array_push( $table, $row );
+
+            dd( [
+                'iteration' => $i,
+                'round' => $rounds[$i]->id,
+                'row' => $row,
+                'table' => $table,
+            ] );
         }
 
         return $table;
