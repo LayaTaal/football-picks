@@ -100,8 +100,15 @@ class User extends Authenticatable {
                 continue;
             }
 
+            $game = Game::find( $survivor_pick->game_id );
+
+            // Don't calculate for games that aren't over yet
+            if ( ! $game->has_score() ) {
+                continue;
+            }
+
             // Check if their pick won or lost
-            $winning_team = ( new Game )->find( $survivor_pick->game_id )->winning_team();
+            $winning_team = $game->winning_team();
             if ( $survivor_pick->team_id !== $winning_team ) {
                 $points = $points - 1;
             }

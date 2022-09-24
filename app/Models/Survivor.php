@@ -20,7 +20,7 @@ class Survivor extends Model
     }
 
     public function game() {
-        return $this->hasOne( Game::class );
+        return Game::find( $this->game_id )->get();
     }
 
     public function season() {
