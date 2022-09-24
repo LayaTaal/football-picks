@@ -54,6 +54,7 @@
                                         </div>
                                     @else
                                         <div class="text-sm font-bold text-red-500">
+                                            {{ $pick['game']->has_score() }}
                                             {{ $pick['team']->name }}
                                         </div>
                                     @endif
