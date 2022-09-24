@@ -107,8 +107,14 @@ class User extends Authenticatable {
                 continue;
             }
 
+            // Don't deduct for games that ended in a tie
+            if ( $game->tie_score() ) {
+                continue;
+            }
+
             // Check if their pick won or lost
             $winning_team = $game->winning_team();
+
             if ( $survivor_pick->team_id !== $winning_team ) {
                 $points = $points - 1;
             }

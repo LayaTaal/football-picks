@@ -30,13 +30,9 @@ class SurvivorStats extends Component {
     }
 
     private function create_table(): array {
-        $rounds = Round::all()->filter( function ( $round ) {
-            return $round->is_complete();
-        } );
-
-        $users = User::all_current_first();
-
-        $table = [];
+        $rounds = ( new Round )->all_in_progress();
+        $users  = User::all_current_first();
+        $table  = [];
 
         // Setup our header row
         $header = [
@@ -63,16 +59,11 @@ class SurvivorStats extends Component {
                 }
 
                 $team = Team::find( $survivor_pick->team_id );
-                $game = Game::where( 'round_id', $rounds[ $i ]->id )
-                            ->where( 'season_id', config( 'settings.active_season' ) )
-                            ->where( function ( $query ) use ( $team ) {
-                                $query->where( 'home_team', $team->id )
-                                      ->orWhere( 'away_team', $team->id );
-                            } )
-                            ->first();
+                $game = Game::find( $survivor_pick->game_id );
 
                 array_push( $row, [
                     'team'     => $team,
+                    'game'     => $game,
                     'team_won' => $game->winning_team() === $survivor_pick->team_id || $game->tie_score(),
                 ] );
             }

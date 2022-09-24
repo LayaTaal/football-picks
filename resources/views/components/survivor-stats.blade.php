@@ -28,21 +28,29 @@
             @else
                 <tbody class="bg-white divide-y divide-gray-200">
                 <tr>
-                    @foreach( $row_data as $col_id => $col_data )
+                    @foreach( $row_data as $col_id => $pick )
                         @if( $col_id === 0 )
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="text-sm font-bold text-gray-900">
-                                        {{ $col_data }}
+                                        {{ $pick }}
                                     </div>
                                 </div>
                             </td>
                         @else
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    @if ( $col_data )
-                                        <div class="text-sm font-bold {{ $col_data['team_won'] ? 'text-green-500' : 'text-red-500 line-through' }}">
-                                            {{ $col_data['team']->name }}
+                                    @if ( $pick['game']->winning_team() === $pick['team']->id || $pick['game']->tie_score() )
+                                        <div class="text-sm font-bold text-green-500">
+                                            {{ $pick['team']->name }} (won or tie)
+                                        </div>
+                                    @elseif( ! $pick['game']->has_score() )
+                                        <div class="text-sm font-bold text-gray-500">
+                                            {{ $pick['team']->name }}
+                                        </div>
+                                    @elseif( $pick['game']->winning_team() !== $pick['team']->id )
+                                        <div class="text-sm font-bold text-red-500">
+                                            {{ $pick['team']->name }}
                                         </div>
                                     @else
                                         <div class="text-sm font-bold text-gray-900 line-through">
