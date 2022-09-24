@@ -40,7 +40,11 @@
                         @else
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    @if ( $pick['game']->winning_team() === $pick['team']->id || $pick['game']->tie_score() )
+                                    @if ( $pick['team'] === null )
+                                        <div class="text-sm font-bold text-gray-900 line-through">
+                                            N/A
+                                        </div>
+                                    @elseif ( $pick['game']->winning_team() === $pick['team']->id || $pick['game']->tie_score() )
                                         <div class="text-sm font-bold text-green-500">
                                             {{ $pick['team']->name }} (won or tie)
                                         </div>
@@ -48,13 +52,9 @@
                                         <div class="text-sm font-bold text-gray-500">
                                             {{ $pick['team']->name }}
                                         </div>
-                                    @elseif( $pick['game']->winning_team() !== $pick['team']->id )
+                                    @else( $pick['game']->winning_team() !== $pick['team']->id )
                                         <div class="text-sm font-bold text-red-500">
                                             {{ $pick['team']->name }}
-                                        </div>
-                                    @else
-                                        <div class="text-sm font-bold text-gray-900 line-through">
-                                            N/A
                                         </div>
                                     @endif
                                 </div>
