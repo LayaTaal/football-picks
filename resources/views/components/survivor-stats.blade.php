@@ -44,15 +44,15 @@
                                         <div class="text-sm font-bold text-gray-900 line-through">
                                             N/A
                                         </div>
-                                    @elseif ( $pick['game']->winning_team() === $pick['team']->id || $pick['game']->tie_score() )
-                                        <div class="text-sm font-bold text-green-500">
-                                            {{ $pick['team']->name }} (won or tie)
-                                        </div>
                                     @elseif( ! $pick['game']->has_score() )
                                         <div class="text-sm font-bold text-gray-500">
                                             {{ $pick['team']->name }}
                                         </div>
-                                    @else( $pick['game']->winning_team() !== $pick['team']->id )
+                                    @elseif ( $pick['game']->winning_team() === $pick['team']->id || $pick['game']->tie_score() )
+                                        <div class="text-sm font-bold text-green-500">
+                                            {{ $pick['team']->name }}
+                                        </div>
+                                    @else
                                         <div class="text-sm font-bold text-red-500">
                                             {{ $pick['team']->name }}
                                         </div>
