@@ -53,7 +53,10 @@ class SurvivorStats extends Component {
                 $survivor_pick = $users[ $j ]->survivor_picks()->where( 'round_id', $rounds[ $i ]->id )->first();
 
                 if ( ! $survivor_pick ) {
-                    array_push( $row, null );
+                    array_push( $row, [
+                        'team' => null,
+                        'game' => null,
+                    ] );
 
                     continue;
                 }
