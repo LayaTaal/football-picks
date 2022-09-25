@@ -123,4 +123,22 @@ class User extends Authenticatable {
         return $points;
     }
 
+    public function total_correct_picks(): int {
+        $correct_picks = 0;
+
+        // Get all picks from this season
+        $picks = $this->picks()
+            ->where( 'season_id', config( 'settings.active_season' ) )->get();
+
+        // Loop through picks
+        foreach ( $picks as $pick ) {
+            if ( $pick->is_correct() ) {
+                $correct_picks++;
+            }
+        }
+
+        // return total
+        return $correct_picks;
+    }
+
 }
