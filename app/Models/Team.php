@@ -16,8 +16,10 @@ class Team extends Model {
 
         $game = Game::where( 'round_id', $settings['active_round'] )
                     ->where( 'season_id', $settings['active_season'] )
-                    ->orWhere( 'away_team', $this->id )
-                    ->orWhere( 'home_team', $this->id );
+                    ->where( function ( $query ) {
+                        $query->where( 'away_team', $this->id )
+                              ->orWhere( 'home_team', $this->id );
+                    } );
 
         if ( ! $game->exists() ) {
             return null;
