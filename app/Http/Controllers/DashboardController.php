@@ -65,9 +65,8 @@ class DashboardController extends Controller {
                                  ->where( 'round_id', config( 'settings' )['active_round'] )
                                  ->where( function ( $query ) use ( $games_data ) {
                                      $query->where( 'home_team', $games_data['survivor_pick'] )
-                                           ->orWhere( 'away_team', $games_data['survivor_pick'] )->first();
-                                 } );
-
+                                           ->orWhere( 'away_team', $games_data['survivor_pick'] );
+                                 } )->first();
 
             $survivor_attrs = [
                 'user_id'   => request()->user()->id,
