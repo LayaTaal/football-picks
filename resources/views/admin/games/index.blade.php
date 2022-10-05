@@ -68,7 +68,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="text-sm font-medium text-gray-900">
                                         @if( $game->has_score() )
-                                            {{ $away_team->score() }} - {{ $home_team->score() }}
+                                            {{ $away_team->score( $game ) }} - {{ $home_team->score( $game ) }}
                                         @endif
                                     </div>
                                 </td>

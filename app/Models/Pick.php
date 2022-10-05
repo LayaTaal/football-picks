@@ -30,4 +30,8 @@ class Pick extends Model
     public function team() {
         return $this->belongsTo( Team::class );
     }
+
+    public function is_correct() {
+        return $this->game->winning_team() === $this->team->id;
+    }
 }
