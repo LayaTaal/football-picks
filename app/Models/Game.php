@@ -51,7 +51,7 @@ class Game extends Model {
         $game_date->setTimeZone( new DateTimeZone( 'America/New_York' ) );
 
         // todo: look into better way to handle this in the future
-        $utc_to_eastern = config( 'settings.daylight_savings_time' ) === 1 ? "PT4H" : "PT5H";
+        $utc_to_eastern    = config( 'settings.daylight_savings_time' ) === 1 ? "PT4H" : "PT5H";
         $revised_game_date = ( clone $game_date )->add( new DateInterval( $utc_to_eastern ) );
 
         return $current_date >= $revised_game_date;
