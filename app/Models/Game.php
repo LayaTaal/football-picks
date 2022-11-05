@@ -51,7 +51,8 @@ class Game extends Model {
         $game_date->setTimeZone( new DateTimeZone( 'America/New_York' ) );
 
         // todo: look into better way to handle this in the future
-        $revised_game_date = (clone $game_date)->add( new DateInterval("PT4H"));
+        $utc_to_eastern = config( 'settings.daylight_savings_time' ) === 1 ? "PT4H" : "PT5H";
+        $revised_game_date = ( clone $game_date )->add( new DateInterval( $utc_to_eastern ) );
 
         return $current_date >= $revised_game_date;
     }
@@ -63,7 +64,7 @@ class Game extends Model {
     public function home_team_won(): ?bool {
         if ( $this->home_team_score > $this->away_team_score ) {
             return true;
-        } else if ( $this->home_team_score < $this->away_team_score ){
+        } elseif ( $this->home_team_score < $this->away_team_score ) {
             return false;
         }
 
@@ -74,7 +75,7 @@ class Game extends Model {
     public function winning_team() {
         if ( $this->home_team_score > $this->away_team_score ) {
             return $this->home_team;
-        } else if ( $this->home_team_score < $this->away_team_score ){
+        } elseif ( $this->home_team_score < $this->away_team_score ) {
             return $this->away_team;
         }
 
@@ -92,4 +93,5 @@ class Game extends Model {
 
         return false;
     }
+
 }

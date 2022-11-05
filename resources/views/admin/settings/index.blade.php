@@ -55,6 +55,15 @@
                         </div>
 
                         <div class="mb-6">
+                            <x-label for="daylight_savings_time">Daylight savings time?</x-label>
+                            <input type="checkbox" name="daylight_savings_time" id="daylight_savings_time" value="true" {{ config( 'settings.daylight_savings_time' ) === 1 ? 'checked=true': '' }}" />
+
+                            @error( 'daylight_savings_time' )
+                            <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-6">
                             <x-button type="submit">Update Settings</x-button>
                         </div>
                     </form>

@@ -27,17 +27,31 @@ class AdminSettingController extends Controller {
         ] );
     }
 
-    public function update( Request $request, Setting $setting, Factory $cache ) {
-        $attributes = request()->validate( [
-            'active_season' => [ 'required' ],
-            'active_round'  => [ 'required' ],
-        ] );
+    public function update( Request $request, Factory $cache ) {
+        $active_season         = Setting::where( 'name', 'active_season' )->first();
+        $active_round          = Setting::where( 'name', 'active_round' )->first();
+        $daylight_savings_time = Setting::where( 'name', 'daylight_savings_time' )->first();
 
-        $active_season = Setting::where( 'name', 'active_season' )->first();
-        $active_round  = Setting::where( 'name', 'active_round' )->first();
+        if ( $request->input( 'active_season' ) ) {
+            $active_season->value = $request->input( 'active_season' );
+            $active_season->save();
+        }
 
-        $active_season->update( [ 'value' => $attributes['active_season'] ] );
-        $active_round->update( [ 'value' => $attributes['active_round'] ] );
+        if ( $request->input( 'active_round' ) ) {
+            $active_round->value = $request->input( 'active_round' );
+            $active_round->save();
+        }
+
+        if ( $daylight_savings_time ) {
+            $daylight_savings_time->value = $request->input( 'daylight_savings_time' ) === "true" ? 1 : 0;
+            $daylight_savings_time->save();
+        } else {
+            $setting        = new Setting;
+            $setting->name  = "daylight_savings_time";
+            $setting->value = $request->input( 'daylight_savings_time' ) === "true" ? 1 : 0;
+            $setting->save();
+        }
+
         $cache->forget( 'settings' );
 
         return redirect( '/admin/settings/' )->with( 'success', 'Settings updated successfully.' );
