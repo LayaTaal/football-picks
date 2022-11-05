@@ -11,8 +11,12 @@
             @endif
         >
         {{ $team->name }}
-        @if( ( $game->is_over() && ! $game->has_score() ) && $game->user_pick->team_id === $team->id )
-            <span><x-gmdi-check-circle class="text-green-600 w-4 h-4 inline-block align-middle"/></span>
+        @if( ( $game->is_over() && ! $game->has_score() ) )
+            @if ( $game->user_pick )
+                @if( $game->user_pick->team_id === $team->id )
+                    <span><x-gmdi-check-circle class="text-green-600 w-4 h-4 inline-block align-middle"/></span>
+                @endif
+            @endif
         @endif
     </label>
     @if( $game->has_score() )
