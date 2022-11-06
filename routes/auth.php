@@ -78,6 +78,8 @@ Route::middleware( 'can:admin' )->group( function () {
     Route::resource( 'admin/games', AdminGameController::class )->except( 'show' );
     Route::get( 'admin/settings/', [ AdminSettingController::class, 'index' ] );
     Route::patch( 'admin/settings/', [ AdminSettingController::class, 'update' ] );
+    Route::put( 'admin/settings/', [ AdminSettingController::class, 'update' ] );
+//    Route::resource( 'admin/settings', AdminSettingController::class )->except( 'show', 'edit', 'store', 'destroy', 'create' );
 
     Route::get( 'admin/users', [ AdminUserController::class, 'index' ] );
     Route::delete( 'admin/user/{id}', [ AdminUserController::class, 'destroy' ] );
