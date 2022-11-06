@@ -28,6 +28,8 @@ class AdminSettingController extends Controller {
     }
 
     public function update( Request $request, Factory $cache ) {
+        var_dump( 'Updating settings' );
+        die;
         dd( $request->all() );
         $active_season         = Setting::where( 'name', 'active_season' )->first();
         $active_round          = Setting::where( 'name', 'active_round' )->first();
