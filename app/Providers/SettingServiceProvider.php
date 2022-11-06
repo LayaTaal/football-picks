@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Cache\Factory;
 
 class SettingServiceProvider extends ServiceProvider {
 
@@ -20,14 +19,16 @@ class SettingServiceProvider extends ServiceProvider {
     /**
      * Bootstrap services.
      *
+     * @param  \App\Models\Setting  $setting
+     *
      * @return void
      */
-    public function boot( Factory $cache, Setting $setting ) {
-        $setting = $cache->remember( 'settings', 60, function () use ( $setting ) {
-            return $setting->pluck( 'value', 'name' )->all();
-        } );
+    public function boot( Setting $setting ): void {
+//        $setting = $cache->remember( 'settings', 60, function () use ( $setting ) {
+//            return $setting->pluck( 'value', 'name' )->all();
+//        } );
 
-        config()->set( 'settings', $setting );
+        config()->set( 'settings', $setting->pluck( 'value', 'name' )->all() );
     }
 
 }

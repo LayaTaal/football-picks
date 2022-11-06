@@ -10,7 +10,7 @@
             <x-quicklinks />
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex">
                 <div class="w-full md:w-1/3">
-                    <form method="POST" action="/admin/settings/" enctype="multipart/form-data">
+                    <form method="POST" action="/admin/settings" enctype="multipart/form-data">
                         @csrf
                         @method( 'PATCH' )
 
