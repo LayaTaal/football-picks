@@ -13,8 +13,6 @@ class UserProfileController extends Controller {
     }
 
     public function update() {
-        $request = request()->all();
-
         $attributes = request()->validate( [
             'name'     => 'string',
             'email'    => Rule::unique( 'users', 'email' )->ignore( auth()->user()->id ),
