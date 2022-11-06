@@ -6,7 +6,6 @@ use App\Models\Round;
 use App\Models\Season;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Cache\Factory;
 
 class AdminSettingController extends Controller {
 
@@ -27,7 +26,7 @@ class AdminSettingController extends Controller {
         ] );
     }
 
-    public function update( Request $request, Factory $cache ) {
+    public function update() {
         var_dump( 'Updating settings' );
         die;
         dd( $request->all() );
@@ -61,8 +60,6 @@ class AdminSettingController extends Controller {
             $setting->value = $request->input( 'daylight_savings_time' ) === "true" ? 1 : 0;
             $setting->save();
         }
-
-        $cache->forget( 'settings' );
 
         return redirect( '/admin/settings/' )->with( 'success', 'Settings updated successfully.' );
     }
