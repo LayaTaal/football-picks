@@ -42,6 +42,13 @@ class AdminSettingController extends Controller {
             $active_round->save();
         }
 
+        dd(
+            [
+                'model'   => $daylight_savings_time,
+                'request' => $request->input( 'daylight_savings_time' ),
+            ]
+        );
+
         if ( $daylight_savings_time ) {
             $daylight_savings_time->value = $request->input( 'daylight_savings_time' ) === "true" ? 1 : 0;
             $daylight_savings_time->save();
