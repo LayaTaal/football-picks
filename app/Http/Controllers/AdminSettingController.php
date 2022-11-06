@@ -28,6 +28,7 @@ class AdminSettingController extends Controller {
     }
 
     public function update( Request $request, Factory $cache ) {
+        dd( $request->all() );
         $active_season         = Setting::where( 'name', 'active_season' )->first();
         $active_round          = Setting::where( 'name', 'active_round' )->first();
         $daylight_savings_time = Setting::where( 'name', 'daylight_savings_time' )->first();
