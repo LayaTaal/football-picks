@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AdminSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +20,6 @@ Route::get( '/', function() {
 
 Route::get( '/dashboard', [ DashboardController::class, 'index' ] )->middleware( [ 'auth' ] )->name( 'dashboard' );
 Route::patch( '/dashboard', [ DashboardController::class, 'update' ] )->middleware( [ 'auth' ] )->name( 'dashboard' );
-Route::get( '/admin/settings', [ AdminSettingController::class, 'index' ] )->middleware( [ 'can:admin' ] );
-Route::patch( '/admin/settings', [ AdminSettingController::class, 'update' ] )->middleware( [ 'can:admin' ] );
 
 Route::get( '/admin', function () {
     return view( 'admin' );
